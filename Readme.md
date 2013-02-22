@@ -36,7 +36,7 @@ modal(
   { title: 'Delete object'
   , content: 'Are you sure you want to delete this object?'
   , buttons:
-    [ { text: 'Don\'t delete', event: 'cancel', classname: '' } ]
+    [ { text: 'Don\'t delete', event: 'cancel', classname: '' } 
     , { text: 'Delete', event: 'confirm', classname: 'danger' } ]
   })
   .on('confirm', deleteItem)
