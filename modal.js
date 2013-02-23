@@ -89,6 +89,9 @@ function Modal(settings) {
     this.removeAllListeners()
     $(document).off('keyup', keyup)
   }, this)
+  
+  // Expose so you can control externally
+  this.close = removeModal
 
   /*
    * Respond to a key event
