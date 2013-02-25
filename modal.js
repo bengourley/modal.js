@@ -1,7 +1,5 @@
 module.exports = modal
 
-var template = require('./modal-template')
-
 /*
  * This module provides generic modal dialog functionality
  * for blocking the UI and obtaining user input.
@@ -17,7 +15,7 @@ var template = require('./modal-template')
  *     - buttons (array)
  *       - text (string) the button text
  *       - event (string) the event name to fire when the button is clicked
- *       - classname (string) the classname to apply to the button
+ *       - className (string) the className to apply to the button
  *       - keyCode (number) the keycode of a shortcut key for the button
  *
  *  Events will be fired on the modal according to which button is clicked.
@@ -29,24 +27,26 @@ var template = require('./modal-template')
  *     { title: 'Delete object'
  *     , content: 'Are you sure you want to delete this object?'
  *     , buttons:
- *       [ { text: 'Don\'t delete', event: 'cancel', classname: '' } ]
- *       , { text: 'Delete', event: 'confirm', classname: 'danger' } ]
+ *       [ { text: 'Don\'t delete', event: 'cancel', className: '' }
+ *       , { text: 'Delete', event: 'confirm', className: 'danger' }
+ *       ]
  *     })
  *     .on('confirm', deleteItem)
  */
 
-var Emitter = require('events').EventEmitter
 
+var template = require('./modal-template')
+  , Emitter = require('events').EventEmitter
   , defaults =
     { title: 'Are you sure?'
     , content: 'Please confirm this action.'
     , buttons:
-      [ { text: 'Cancel', event: 'cancel', classname: '', keyCodes: [ 27 ] }
-      , { text: 'Confirm', event: 'confirm', classname: 'btn-primary' }
+      [ { text: 'Cancel', event: 'cancel', className: '', keyCodes: [ 27 ] }
+      , { text: 'Confirm', event: 'confirm', className: 'btn-primary' }
       ]
     , clickOutsideToClose: true
     , clickOutsideEvent: 'cancel'
-    , modalClass: ''
+    , className: ''
     }
 
 function modal(options) {
@@ -56,7 +56,7 @@ function modal(options) {
 function Modal(settings) {
 
   var el = $(template(settings))
-    , dialog = el.find('.js-modal-content')
+    , modal = el.find('.js-modal')
     , content = el.find('.js-content')
     , buttons = el.find('.js-button')
     , keys = {}
@@ -67,15 +67,25 @@ function Modal(settings) {
     content.append(settings.content)
   }
 
-  dialog.addClass(settings.modalClass)
+  modal.addClass(settings.className)
 
   // Cache the button shortcut keycodes
   $.each(settings.buttons, function (i, button) {
     if (!button.keyCodes) return
-    $.each(button.keyCodes, function (keyCode) {
-      keys[keyCode.toString()] = i
+    $.each(button.keyCodes, function (n, keyCode) {
+      keys[keyCode + ''] = i
     })
   })
+
+  /*
+   * Reposition the modal in the middle of the screen
+   */
+  function handleResize() {
+    if (modal.outerHeight(true) < window.innerHeight) {
+      var diff = window.innerHeight - modal.outerHeight(true)
+      modal.css({ top: diff / 2 })
+    }
+  }
 
   /*
    * Remove a modal from the DOM
@@ -85,16 +95,17 @@ function Modal(settings) {
     el.transition({ opacity: 0 }, 200, function () {
       el.remove()
     })
-    dialog.transition({ top: '100%' }, 200)
+    modal.transition({ top: window.innerHeight }, 200)
     this.removeAllListeners()
     $(document).off('keyup', keyup)
+    $(window).off('resize', handleResize)
   }, this)
 
   /*
    * Respond to a key event
    */
   var keyup = $.proxy(function (e) {
-    var button = keys[e.keyCode]
+    var button = keys[e.keyCode + '']
     if (typeof button !== 'undefined') {
       this.emit(settings.buttons[button].event)
       removeModal()
@@ -123,16 +134,22 @@ function Modal(settings) {
 
   // Set initial styles
   el.css({ opacity: 0 })
-  dialog.css({ top: '0%' })
+  modal.css({ top: '0%' })
 
   // Append to DOM
   $('body').append(el)
 
   // transition in
   el.transition({ opacity: 1 }, 100)
-  dialog.transition({ top: '52%' }, 200, function () {
-    dialog.transition({ top: '50%' }, 150)
-  })
+
+  if (modal.outerHeight(true) < window.innerHeight) {
+    var diff = window.innerHeight - modal.outerHeight(true)
+    modal.transition({ top: (diff / 2) + 10 }, 200, function () {
+      modal.transition({ top: diff / 2 }, 150)
+    })
+  }
+
+  $(window).on('resize', handleResize)
 
 }
 
