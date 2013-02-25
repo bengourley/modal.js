@@ -100,6 +100,9 @@ function Modal(settings) {
     $(document).off('keyup', keyup)
     $(window).off('resize', handleResize)
   }, this)
+  
+  // Expose so you can control externally
+  this.close = removeModal
 
   /*
    * Respond to a key event
