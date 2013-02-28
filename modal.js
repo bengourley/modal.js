@@ -16,7 +16,7 @@ module.exports = modal
  *       - text (string) the button text
  *       - event (string) the event name to fire when the button is clicked
  *       - className (string) the className to apply to the button
- *       - keyCode (number) the keycode of a shortcut key for the button
+ *       - keyCodes ([numbers]) the keycodes of shortcuts key for the button
  *       - clickOutsideToClose (boolean) whether a click event outside of the modal should close it
  *       - clickOutsideEvent (string) the name of the event to be triggered on clicks outside of the modal
  *

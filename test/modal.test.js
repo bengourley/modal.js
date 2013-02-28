@@ -90,6 +90,17 @@ describe('modal', function () {
         })
       })
 
+      it('should add the correct classes', function () {
+        var buttons =
+          [ { text: 'Button 1', className: 'one-class' }
+          , { text: 'Button 2', className: 'multiple classes' }
+          ]
+        modal({ fx: false, buttons: buttons })
+        assert($('.js-button').eq(0).hasClass('one-class'))
+        assert($('.js-button').eq(1).hasClass('multiple'))
+        assert($('.js-button').eq(1).hasClass('classes'))
+      })
+
     })
 
   })
@@ -183,9 +194,54 @@ describe('modal', function () {
 
   describe('option: buttons', function () {
 
-    it('should trigger the provided event')
-    it('should hook up buttons to keyup events if provided')
-    it('should have defaults')
+    it('should trigger the provided event', function (done) {
+
+      modal(
+        { fx: false
+        , buttons: [ { text: 'Go', event: 'go' } ]
+        }).on('go', function () {
+          done()
+        })
+      $('.js-button').click()
+
+    })
+
+    it('should hook up buttons to keyup events if provided', function (done) {
+      modal(
+        { fx: false
+        , buttons: [ { text: 'Stop', event: 'stop', keyCodes: [ 27 ] } ]
+        }).on('stop', function () {
+          done()
+        })
+
+      $(document).trigger({ type: 'keyup', keyCode: 27 })
+
+    })
+
+    it('should have defaults', function (done) {
+      var i = 0
+      function cb() {
+        if (++i === 2) return done()
+        setTimeout(fns[i], 0)
+      }
+      var fns =
+      [ function () {
+          modal({ fx: false }).on('cancel', cb)
+          $('.js-button').eq(0).click()
+        }
+      , function () {
+          modal({ fx: false }).on('confirm', cb)
+          $('.js-button').eq(1).click()
+        }
+      , function () {
+          modal({ fx: false }).on('cancel', cb)
+          $(document).trigger({ type: 'keyup', keyCode: 27 })
+        }
+      ]
+
+      fns[0]()
+
+    })
 
   })
 
