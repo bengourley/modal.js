@@ -1,5 +1,7 @@
 module.exports = modal
 
+var template = require('./modal-template')
+
 /*
  * This module provides generic modal dialog functionality
  * for blocking the UI and obtaining user input.
@@ -17,6 +19,8 @@ module.exports = modal
  *       - event (string) the event name to fire when the button is clicked
  *       - className (string) the className to apply to the button
  *       - keyCode (number) the keycode of a shortcut key for the button
+ *       - clickOutsideToClose (boolean) whether a click event outside of the modal should close it
+ *       - clickOutsideEvent (string) the name of the event to be triggered on clicks outside of the modal
  *
  *  Events will be fired on the modal according to which button is clicked.
  *  Defaults are confirm/cancel, but these can be overriden in your options.
@@ -34,9 +38,8 @@ module.exports = modal
  *     .on('confirm', deleteItem)
  */
 
+var Emitter = require('events').EventEmitter
 
-var template = require('./modal-template')
-  , Emitter = require('events').EventEmitter
   , defaults =
     { title: 'Are you sure?'
     , content: 'Please confirm this action.'
@@ -101,6 +104,11 @@ function Modal(settings) {
     $(window).off('resize', handleResize)
   }, this)
 
+  // Expose so you can control externally
+  this.close = function() {
+    removeModal()
+  }
+
   /*
    * Respond to a key event
    */
@@ -122,15 +130,16 @@ function Modal(settings) {
 
   $(document).on('keyup', keyup)
 
-  // Listen for clicks outside the modal?
-  if (settings.clickOutsideToClose) {
-    el.on('click', $.proxy(function (e) {
-      if ($(e.target).is(el)) {
-        this.emit(settings.clickOutsideEvent)
+  // Listen for clicks outside the modal
+  el.on('click', $.proxy(function (e) {
+    if ($(e.target).is(el)) {
+      this.emit(settings.clickOutsideEvent)
+      // Clicks outside should close?
+      if (settings.clickOutsideToClose) {
         removeModal()
       }
-    }, this))
-  }
+    }
+  }, this))
 
   // Set initial styles
   el.css({ opacity: 0 })
