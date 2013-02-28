@@ -1,7 +1,5 @@
 module.exports = modal
 
-var template = require('./modal-template')
-
 /*
  * This module provides generic modal dialog functionality
  * for blocking the UI and obtaining user input.
@@ -38,7 +36,9 @@ var template = require('./modal-template')
  *     .on('confirm', deleteItem)
  */
 
-var Emitter = require('events').EventEmitter
+var Backbone = require('backbone')
+  , _ = require('underscore')
+  , template = require('./modal-template')
 
   , defaults =
     { title: 'Are you sure?'
@@ -50,6 +50,7 @@ var Emitter = require('events').EventEmitter
     , clickOutsideToClose: true
     , clickOutsideEvent: 'cancel'
     , className: ''
+    , fx: true // used for testing
     }
 
 function modal(options) {
@@ -63,6 +64,7 @@ function Modal(settings) {
     , content = el.find('.js-content')
     , buttons = el.find('.js-button')
     , keys = {}
+    , transitionFn = $.fn.transition ? 'transition' : 'animate'
 
   if (typeof settings.content === 'string') {
     content.append($('<p/>', { text: settings.content }))
@@ -95,11 +97,11 @@ function Modal(settings) {
    * and tear down its related events
    */
   var removeModal = $.proxy(function () {
-    el.transition({ opacity: 0 }, 200, function () {
+    el[transitionFn]({ opacity: 0 }, settings.fx ? 200 : 0, function () {
       el.remove()
     })
-    modal.transition({ top: window.innerHeight }, 200)
-    this.removeAllListeners()
+    modal[transitionFn]({ top: window.innerHeight }, settings.fx ? 200 : 0)
+    this.stopListening()
     $(document).off('keyup', keyup)
     $(window).off('resize', handleResize)
   }, this)
@@ -115,7 +117,7 @@ function Modal(settings) {
   var keyup = $.proxy(function (e) {
     var button = keys[e.keyCode + '']
     if (typeof button !== 'undefined') {
-      this.emit(settings.buttons[button].event)
+      this.trigger(settings.buttons[button].event)
       removeModal()
     }
   }, this)
@@ -123,7 +125,7 @@ function Modal(settings) {
   // Assign button event handlers
   buttons.each($.proxy(function (i, el) {
     $(el).on('click', $.proxy(function () {
-      this.emit(settings.buttons[i].event)
+      this.trigger(settings.buttons[i].event)
       removeModal()
     }, this))
   }, this))
@@ -133,7 +135,7 @@ function Modal(settings) {
   // Listen for clicks outside the modal
   el.on('click', $.proxy(function (e) {
     if ($(e.target).is(el)) {
-      this.emit(settings.clickOutsideEvent)
+      this.trigger(settings.clickOutsideEvent)
       // Clicks outside should close?
       if (settings.clickOutsideToClose) {
         removeModal()
@@ -149,12 +151,12 @@ function Modal(settings) {
   $('body').append(el)
 
   // transition in
-  el.transition({ opacity: 1 }, 100)
+  el[transitionFn]({ opacity: 1 }, settings.fx ? 100 : 0)
 
   if (modal.outerHeight(true) < window.innerHeight) {
     var diff = window.innerHeight - modal.outerHeight(true)
-    modal.transition({ top: (diff / 2) + 10 }, 200, function () {
-      modal.transition({ top: diff / 2 }, 150)
+    modal[transitionFn]({ top: (diff / 2) + 10 }, settings.fx ? 200 : 0, function () {
+      modal[transitionFn]({ top: diff / 2 }, settings.fx ? 150 : 0)
     })
   }
 
@@ -162,5 +164,5 @@ function Modal(settings) {
 
 }
 
-// Be an emitter
-Modal.prototype = new Emitter()
+// Be an triggerter
+Modal.prototype = _.extend({}, Backbone.Events)

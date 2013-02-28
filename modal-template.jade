@@ -1,7 +1,9 @@
 .modal-overlay
-  .modal-content.js-modal-content
-    h1 #{title}
+  .modal-content.js-modal
+    if (title)
+      h1.modal-title #{title}
     .js-content
-    .controls
-      each button in buttons
-        button.btn.js-button(class=button.classname) #{button.text}
+    if (buttons.length)
+      .modal-controls
+        each button in buttons
+          button.btn.js-button(class=button.className) #{button.text}

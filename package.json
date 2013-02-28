@@ -1,0 +1,25 @@
+{
+  "name": "modal",
+  "version": "0.0.0",
+  "description": "A modal window for the browser.",
+  "main": "modal.js",
+  "scripts": {
+    "test": "node_modules/.bin/mocha/ -R spec test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bengourley/modal.js.git"
+  },
+  "author": "Ben Gourley",
+  "license": "BSD",
+  "devDependencies": {
+    "jade": "~0.28.1",
+    "jsdom": "~0.5.0",
+    "mocha": "~1.8.1"
+  },
+  "dependencies": {
+    "backbone": "~0.9.10",
+    "underscore": "~1.4.4",
+    "jquery": "~1.8.3"
+  }
+}
