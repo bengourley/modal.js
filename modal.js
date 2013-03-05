@@ -85,7 +85,7 @@ function Modal(settings) {
   /*
    * Reposition the modal in the middle of the screen
    */
-  function handleResize() {
+  function centre() {
     if (modal.outerHeight(true) < window.innerHeight) {
       var diff = window.innerHeight - modal.outerHeight(true)
       modal.css({ top: diff / 2 })
@@ -103,13 +103,16 @@ function Modal(settings) {
     modal[transitionFn]({ top: window.innerHeight }, settings.fx ? 200 : 0)
     this.stopListening()
     $(document).off('keyup', keyup)
-    $(window).off('resize', handleResize)
+    $(window).off('resize', centre)
   }, this)
 
   // Expose so you can control externally
   this.close = function() {
     removeModal()
   }
+
+  // Expose so you can recentre externally
+  this.centre = centre
 
   /*
    * Respond to a key event
@@ -160,7 +163,7 @@ function Modal(settings) {
     })
   }
 
-  $(window).on('resize', handleResize)
+  $(window).on('resize', centre)
 
 }
 

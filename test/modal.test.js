@@ -119,6 +119,23 @@ describe('modal', function () {
 
   })
 
+  describe('centre()', function () {
+
+    it('should centre to window height', function () {
+      var m = modal({ fx: false })
+      assert.equal(typeof m.centre, 'function')
+      window.innerHeight = 1000
+      $('.modal-content').height(100)
+      assert.equal($('.modal-content').outerHeight(), 100)
+      $('.modal-content').css('top', 0)
+
+      m.centre()
+
+      assert.equal($('.modal-content').css('top'), '450px')
+    })
+
+  })
+
   describe('handeResize()', function () {
 
     it('should maintain postion in the centre of the screen')
