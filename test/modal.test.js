@@ -117,6 +117,14 @@ describe('modal', function () {
       }, 0)
     })
 
+    it('should emit a close event', function (done) {
+      var m = modal({ fx: false })
+      m.on('close', function () {
+        done()
+      })
+      m.close()
+    })
+
   })
 
   describe('centre()', function () {

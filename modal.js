@@ -101,6 +101,7 @@ function Modal(settings) {
       el.remove()
     })
     modal[transitionFn]({ top: window.innerHeight }, settings.fx ? 200 : 0)
+    this.trigger('close')
     this.stopListening()
     $(document).off('keyup', keyup)
     $(window).off('resize', centre)
