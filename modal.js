@@ -38,7 +38,7 @@ module.exports = modal
 
 var Backbone = require('backbone')
   , _ = require('underscore')
-  , template = require('./modal-template')
+  , template = require('./modal-template.jade')
 
   , defaults =
     { title: 'Are you sure?'
