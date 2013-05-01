@@ -97,9 +97,12 @@ function Modal(settings) {
    * and tear down its related events
    */
   var removeModal = $.proxy(function () {
-    el[transitionFn]({ opacity: 0 }, settings.fx ? 200 : 0, function () {
+    el[transitionFn]({ opacity: 0 }, settings.fx ? 200 : 0)
+    // Do setTimeout rather than using the transition
+    // callback as it potentially fails to get called in IE10
+    setTimeout(function () {
       el.remove()
-    })
+    }, settings.fx ? 200 : 0)
     modal[transitionFn]({ top: window.innerHeight }, settings.fx ? 200 : 0)
     this.trigger('close')
     this.stopListening()

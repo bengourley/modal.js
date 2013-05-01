@@ -247,7 +247,7 @@ describe('modal', function () {
       var i = 0
       function cb() {
         if (++i === 2) return done()
-        setTimeout(fns[i], 0)
+        setTimeout(fns[i], 10)
       }
       var fns =
       [ function () {
