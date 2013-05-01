@@ -246,7 +246,7 @@ describe('modal', function () {
     it('should have defaults', function (done) {
       var i = 0
       function cb() {
-        if (++i === 2) return done()
+        if (++i === 3) return done()
         setTimeout(fns[i], 10)
       }
       var fns =
