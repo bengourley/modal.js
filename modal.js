@@ -36,8 +36,7 @@ module.exports = modal
  *     .on('confirm', deleteItem)
  */
 
-var Backbone = require('backbone')
-  , _ = require('underscore')
+var Emitter = require('events').EventEmitter
   , template = require('./modal-template')
 
   , defaults =
@@ -58,6 +57,8 @@ function modal(options) {
 }
 
 function Modal(settings) {
+
+  Emitter.call(this)
 
   var el = $(template(settings))
     , modal = el.find('.js-modal')
@@ -104,8 +105,8 @@ function Modal(settings) {
       el.remove()
     }, settings.fx ? 200 : 0)
     modal[transitionFn]({ top: window.innerHeight }, settings.fx ? 200 : 0)
-    this.trigger('close')
-    this.stopListening()
+    this.emit('close')
+    this.removeAllListeners()
     $(document).off('keyup', keyup)
     $(window).off('resize', centre)
   }, this)
@@ -124,7 +125,7 @@ function Modal(settings) {
   var keyup = $.proxy(function (e) {
     var button = keys[e.keyCode + '']
     if (typeof button !== 'undefined') {
-      this.trigger(settings.buttons[button].event)
+      this.emit(settings.buttons[button].event)
       removeModal()
     }
   }, this)
@@ -132,7 +133,7 @@ function Modal(settings) {
   // Assign button event handlers
   buttons.each($.proxy(function (i, el) {
     $(el).on('click', $.proxy(function () {
-      this.trigger(settings.buttons[i].event)
+      this.emit(settings.buttons[i].event)
       removeModal()
     }, this))
   }, this))
@@ -142,7 +143,7 @@ function Modal(settings) {
   // Listen for clicks outside the modal
   el.on('click', $.proxy(function (e) {
     if ($(e.target).is(el)) {
-      this.trigger(settings.clickOutsideEvent)
+      this.emit(settings.clickOutsideEvent)
       // Clicks outside should close?
       if (settings.clickOutsideToClose) {
         removeModal()
@@ -171,5 +172,5 @@ function Modal(settings) {
 
 }
 
-// Be an triggerter
-Modal.prototype = _.extend({}, Backbone.Events)
+// Be an emitter
+Modal.prototype = Object.create(Emitter.prototype)
