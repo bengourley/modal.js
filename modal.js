@@ -173,4 +173,4 @@ function Modal(settings) {
 }
 
 // Be an emitter
-Modal.prototype = Object.create(Emitter.prototype)
+Modal.prototype = Emitter.prototype
