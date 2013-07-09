@@ -1,6 +1,6 @@
 {
   "name": "modal",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A modal window for the browser.",
   "main": "modal.js",
   "scripts": {
