@@ -16,10 +16,7 @@
     "jade": "~0.28.1",
     "jsdom": "~0.5.0",
     "mocha": "~1.8.1",
-    "jadeify2": "0.0.3"
-  },
-  "dependencies": {
-    "underscore": "~1.4.4",
+    "jadeify2": "0.0.3",
     "jquery": "~1.8.3"
   }
 }
