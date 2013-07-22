@@ -27,6 +27,7 @@ module.exports = modal
  *
  *   modal(
  *     { title: 'Delete object'
+ *     , containerClass: 'some-class-name-added-to-modal'
  *     , content: 'Are you sure you want to delete this object?'
  *     , buttons:
  *       [ { text: 'Don\'t delete', event: 'cancel', className: '' }
@@ -42,6 +43,7 @@ var Emitter = require('events').EventEmitter
   , defaults =
     { title: 'Are you sure?'
     , content: 'Please confirm this action.'
+    , containerClass: ''
     , buttons:
       [ { text: 'Cancel', event: 'cancel', className: '', keyCodes: [ 27 ] }
       , { text: 'Confirm', event: 'confirm', className: 'btn-primary' }
@@ -59,6 +61,11 @@ function modal(options) {
 function Modal(settings) {
 
   Emitter.call(this)
+
+  //If false is passed, set as ''
+  if (!settings.containerClass) {
+    settings.containerClass = ''
+  }
 
   var el = $(template(settings))
     , modal = el.find('.js-modal')
