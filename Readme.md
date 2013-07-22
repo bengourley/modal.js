@@ -21,6 +21,7 @@ modal([options])[.on('event')]
 
 - title (string)
 - content (jQuery DOM element / raw string)
+- containerClass (string)
 - buttons (array)
   - text (string) the button text
   - event (string) the event name to fire when the button is clicked
@@ -38,6 +39,7 @@ Defaults are confirm/cancel, but these can be overriden in your options.
 modal(
   { title: 'Delete object'
   , content: 'Are you sure you want to delete this object?'
+  , containerClass: 'another-class-name'
   , buttons:
     [ { text: 'Don\'t delete', event: 'cancel', classname: '' }
     , { text: 'Delete', event: 'confirm', classname: 'danger' }
