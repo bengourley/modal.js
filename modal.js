@@ -87,8 +87,8 @@ function Modal(settings) {
    * Reposition the modal in the middle of the screen
    */
   function centre() {
-    if (modal.outerHeight(true) < window.innerHeight) {
-      var diff = window.innerHeight - modal.outerHeight(true)
+    if (modal.outerHeight(true) < $(window).height()) {
+      var diff = $(window).height() - modal.outerHeight(true)
       modal.css({ top: diff / 2 })
     }
   }
@@ -104,7 +104,7 @@ function Modal(settings) {
     setTimeout(function () {
       el.remove()
     }, settings.fx ? 200 : 0)
-    modal[transitionFn]({ top: window.innerHeight }, settings.fx ? 200 : 0)
+    modal[transitionFn]({ top: $(window).height() }, settings.fx ? 200 : 0)
     this.emit('close')
     this.removeAllListeners()
     $(document).off('keyup', keyup)
@@ -161,8 +161,8 @@ function Modal(settings) {
   // transition in
   el[transitionFn]({ opacity: 1 }, settings.fx ? 100 : 0)
 
-  if (modal.outerHeight(true) < window.innerHeight) {
-    var diff = window.innerHeight - modal.outerHeight(true)
+  if (modal.outerHeight(true) < $(window).height()) {
+    var diff = $(window).height() - modal.outerHeight(true)
     modal[transitionFn]({ top: (diff / 2) + 10 }, settings.fx ? 200 : 0, function () {
       modal[transitionFn]({ top: diff / 2 }, settings.fx ? 150 : 0)
     })
