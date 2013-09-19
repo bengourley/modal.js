@@ -132,7 +132,11 @@ describe('modal', function () {
     it('should centre to window height', function () {
       var m = modal({ fx: false })
       assert.equal(typeof m.centre, 'function')
-      window.innerHeight = 1000
+
+      // jQuery requires a bit of persuasion the window really
+      // is 1000px tall, hence these two assignments
+      window.innerHeight = document.documentElement.clientHeight = 1000
+
       $('.modal-content').height(100)
       assert.equal($('.modal-content').outerHeight(), 100)
       $('.modal-content').css('top', 0)
