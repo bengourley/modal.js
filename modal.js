@@ -121,7 +121,7 @@ function Modal(settings) {
   }, this)
 
   function isFunctionWithArguments(fn) {
-    return fn.toString().match(/^function[^\(]+\([^\(]+\)/) !== null
+    return fn.length > 0
   }
 
   var performRemoveModal = $.proxy(function () {
