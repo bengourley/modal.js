@@ -98,6 +98,33 @@ function Modal(settings) {
    * and tear down its related events
    */
   var removeModal = $.proxy(function () {
+    var listenersWithCallback = 0
+
+    $.each(this.listeners('beforeClose'), function(i, fn) {
+      if (isFunctionWithArguments(fn)) {
+        listenersWithCallback++
+      }
+    })
+
+    if (listenersWithCallback > 0) {
+      var currentCallsCount = 0
+        , performClose = function() {
+          if (++currentCallsCount === listenersWithCallback) {
+            performRemoveModal()
+          }
+        }
+      this.emit('beforeClose', performClose)
+    } else {
+      this.emit('beforeClose')
+      performRemoveModal()
+    }
+  }, this)
+
+  function isFunctionWithArguments(fn) {
+    return fn.length > 0
+  }
+
+  var performRemoveModal = $.proxy(function () {
     el[transitionFn]({ opacity: 0 }, settings.fx ? 200 : 0)
     // Do setTimeout rather than using the transition
     // callback as it potentially fails to get called in IE10

@@ -125,6 +125,67 @@ describe('modal', function () {
       m.close()
     })
 
+    it('should emit a beforeClose event', function (done) {
+      var m = modal({ fx: false })
+        , beforeCloseCalled = false
+      m.on('beforeClose', function () {
+        beforeCloseCalled = true
+      })
+      m.on('close', function () {
+        assert(beforeCloseCalled)
+        done()
+      })
+      m.close()
+    })
+
+    it('should not close until all beforeClose listeners that accept a callback complete', function (done) {
+      var m = modal({ fx: false })
+        , beforeCloseCbCount = 0
+        , beforeCloseHandler = function (cb) {
+            setTimeout(function() {
+              beforeCloseCbCount++
+              cb()
+            }, 100)
+          }
+
+      m.on('beforeClose', beforeCloseHandler)
+      m.on('beforeClose', beforeCloseHandler)
+      m.on('beforeClose', beforeCloseHandler)
+
+      m.on('close', function () {
+        assert.equal(beforeCloseCbCount, 3)
+        done()
+      })
+      m.close()
+    })
+
+    it('should not wait for beforeClose callbacks for listeners that don’t accept them', function (done) {
+      var m = modal({ fx: false })
+        , beforeCloseCbCount = 0
+        , beforeCloseHandlerWithoutCallback = function () {
+          setTimeout(function() {
+            beforeCloseCbCount++
+          }, 100)
+        }
+        , beforeCloseHandlerWithCallback = function (cb) {
+          setTimeout(function() {
+            beforeCloseCbCount++
+            cb()
+          }, 50)
+        }
+
+      m.on('beforeClose', beforeCloseHandlerWithCallback)
+      m.on('beforeClose', beforeCloseHandlerWithCallback)
+      m.on('beforeClose', beforeCloseHandlerWithoutCallback)
+      m.on('beforeClose', beforeCloseHandlerWithoutCallback)
+
+      m.on('close', function () {
+        assert.equal(beforeCloseCbCount, 2)
+        done()
+      })
+      m.close()
+    })
+
   })
 
   describe('centre()', function () {
