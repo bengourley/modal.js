@@ -108,11 +108,11 @@ function Modal(settings) {
 
     if (listenersWithCallback > 0) {
       var currentCallsCount = 0
-        , performClose = $.proxy(function() {
-          if (++currentCallsCount >= listenersWithCallback) {
+        , performClose = function() {
+          if (++currentCallsCount === listenersWithCallback) {
             performRemoveModal()
           }
-        }, this)
+        }
       this.emit('beforeClose', performClose)
     } else {
       this.emit('beforeClose')
