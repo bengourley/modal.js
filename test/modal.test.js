@@ -230,6 +230,21 @@ describe('modal', function () {
 
   })
 
+  describe('option: overlayClassName', function () {
+
+    it('should apply a class to the overlay element if passed', function () {
+      modal({ fx: false, overlayClassName: 'my-custom-modal-class' })
+      assert($('.modal-overlay').hasClass('my-custom-modal-class'))
+    })
+
+    it('should allow multiple classes (space delimited)', function () {
+      modal({ fx: false, overlayClassName: 'my-custom-modal-class my-other-class' })
+      assert($('.modal-overlay').hasClass('my-custom-modal-class'))
+      assert($('.modal-overlay').hasClass('my-other-class'))
+    })
+
+  })
+
   describe('option: clickOutsideToClose', function () {
 
     it ('should close the modal if set to true', function (done) {
