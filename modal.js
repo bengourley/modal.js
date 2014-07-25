@@ -49,6 +49,7 @@ var Emitter = require('events').EventEmitter
     , clickOutsideToClose: true
     , clickOutsideEvent: 'cancel'
     , className: ''
+    , overlayClassName: ''
     , fx: true // used for testing
     }
 
@@ -74,6 +75,7 @@ function Modal(settings) {
   }
 
   modal.addClass(settings.className)
+  el.addClass(settings.overlayClassName)
 
   // Cache the button shortcut keycodes
   $.each(settings.buttons, function (i, button) {
