@@ -175,7 +175,7 @@ function Modal(settings) {
       this.emit(settings.clickOutsideEvent)
       // Clicks outside should close?
 
-      if (settings.clickOutsideToClose && el.css('opacity') > 0) {
+      if (settings.clickOutsideToClose && el.css('opacity') === '1') {
         removeModal()
       }
     }
