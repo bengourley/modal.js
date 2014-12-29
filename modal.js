@@ -171,7 +171,7 @@ function Modal(settings) {
 
   // Listen for clicks outside the modal
   $('body').on('click', $.proxy(function (e) {
-    if (!$(e.target).parents('.inspector').length) {
+    if (!$(e.target).parents('.inspector').length && !$(e.target).parents('ul.ui-autocomplete').length) {
       this.emit(settings.clickOutsideEvent)
       // Clicks outside should close?
 
