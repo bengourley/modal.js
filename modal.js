@@ -49,6 +49,7 @@ var Emitter = require('events').EventEmitter
     , clickOutsideToClose: true
     , clickOutsideEvent: 'cancel'
     , className: ''
+    , overlayClassName: ''
     , fx: true // used for testing
     }
 
@@ -74,6 +75,7 @@ function Modal(settings) {
   }
 
   modal.addClass(settings.className)
+  el.addClass(settings.overlayClassName)
 
   // Cache the button shortcut keycodes
   $.each(settings.buttons, function (i, button) {
@@ -168,11 +170,12 @@ function Modal(settings) {
   $(document).on('keyup', keyup)
 
   // Listen for clicks outside the modal
-  el.on('click', $.proxy(function (e) {
-    if ($(e.target).is(el)) {
+  $('body').on('click', $.proxy(function (e) {
+    if (!$(e.target).parents('.inspector, ul.ui-autocomplete').length) {
       this.emit(settings.clickOutsideEvent)
       // Clicks outside should close?
-      if (settings.clickOutsideToClose) {
+
+      if (settings.clickOutsideToClose && el.css('opacity') === '1') {
         removeModal()
       }
     }

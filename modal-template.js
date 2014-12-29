@@ -3,7 +3,7 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<div class="modal-overlay"><div class="modal-content js-modal">');
+buf.push('<div class="modal-container"><div class="js-modal">');
 if ( (title))
 {
 buf.push('<h1 class="modal-title">' + escape((interp = title) == null ? '' : interp) + '</h1>');
