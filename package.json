@@ -4,7 +4,7 @@
   "description": "A modal window for the browser.",
   "main": "modal.js",
   "scripts": {
-    "test": "node_modules/.bin/mocha/ -R spec test"
+    "test": "mocha -R spec test"
   },
   "repository": {
     "type": "git",

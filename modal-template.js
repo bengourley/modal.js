@@ -20,7 +20,7 @@ buf.push('<div class="modal-controls">');
       var button = buttons[$index];
 
 buf.push('<button');
-buf.push(attrs({ "class": ('btn') + ' ' + ('js-button') + ' ' + (button.className) }, {"class":true}));
+buf.push(attrs({ "class": ('js-button') + ' ' + (button.className) }, {"class":true}));
 buf.push('>' + escape((interp = button.text) == null ? '' : interp) + '</button>');
     }
 
@@ -30,7 +30,7 @@ buf.push('>' + escape((interp = button.text) == null ? '' : interp) + '</button>
       $$l++;      var button = buttons[$index];
 
 buf.push('<button');
-buf.push(attrs({ "class": ('btn') + ' ' + ('js-button') + ' ' + (button.className) }, {"class":true}));
+buf.push(attrs({ "class": ('js-button') + ' ' + (button.className) }, {"class":true}));
 buf.push('>' + escape((interp = button.text) == null ? '' : interp) + '</button>');
     }
 

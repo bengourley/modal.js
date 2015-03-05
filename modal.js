@@ -44,7 +44,7 @@ var Emitter = require('events').EventEmitter
     , content: 'Please confirm this action.'
     , buttons:
       [ { text: 'Cancel', event: 'cancel', className: '', keyCodes: [ 27 ] }
-      , { text: 'Confirm', event: 'confirm', className: 'btn-primary' }
+      , { text: 'Confirm', event: 'confirm', className: '' }
       ]
     , clickOutsideToClose: true
     , clickOutsideEvent: 'cancel'
