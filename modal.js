@@ -32,7 +32,7 @@ module.exports = modal
  *     , content: 'Are you sure you want to delete this object?'
  *     , buttons:
  *       [ { text: 'Don’t delete', event: 'cancel' }
- *       , { text: 'Delete', event: 'confirm', className: 'button-danger', iconClassName: 'icon-delete'}
+ *       , { text: 'Delete', event: 'confirm', className: 'button-danger', iconClassName: 'icon-delete' }
  *       ]
  *     })
  *     .on('confirm', deleteItem)
