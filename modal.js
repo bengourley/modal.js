@@ -17,9 +17,10 @@ module.exports = modal
  *       - event (string) the event name to fire when the button is clicked
  *       - className (string) the className to apply to the button
  *       - iconClassName (string) adds an `i` element before button text with the given class(es)
- *       - keyCodes ([numbers]) the keycodes of shortcuts key for the button
- *       - clickOutsideToClose (boolean) whether a click event outside of the modal should close it
- *       - clickOutsideEvent (string) the name of the event to be triggered on clicks outside of the modal
+ *       - keyCodes ([numbers]) the keycodes of shortcut keys for the button
+ *     - clickOutsideToClose (boolean) whether a click event outside of the modal should close it
+ *     - clickOutsideEvent (string) the name of the event to be triggered on clicks outside of the modal
+ *     - className (string) optional class to apply to the modal element
  *
  *  Events will be fired on the modal according to which button is clicked.
  *  Defaults are confirm/cancel, but these can be overriden in your options.
@@ -30,8 +31,8 @@ module.exports = modal
  *     { title: 'Delete object'
  *     , content: 'Are you sure you want to delete this object?'
  *     , buttons:
- *       [ { text: 'Don\'t delete', event: 'cancel', className: '' }
- *       , { text: 'Delete', event: 'confirm', classname: 'danger', iconClassName: 'icon-delete'}
+ *       [ { text: 'Don’t delete', event: 'cancel' }
+ *       , { text: 'Delete', event: 'confirm', className: 'button-danger', iconClassName: 'icon-delete'}
  *       ]
  *     })
  *     .on('confirm', deleteItem)
