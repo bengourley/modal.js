@@ -25,6 +25,7 @@ modal([options])[.on('event')]
   - text (string) the button text
   - event (string) the event name to fire when the button is clicked
   - classname (string) the classname to apply to the button
+  - iconClassName (string) adds an `i` element before button text with the given class(es)
   - keyCode (number) the keycode of a shortcut key for the button
   - clickOutsideToClose (boolean) whether a click event outside of the modal should close it
   - clickOutsideEvent (string) the name of the event to be triggered on clicks outside of the modal
@@ -40,7 +41,7 @@ modal(
   , content: 'Are you sure you want to delete this object?'
   , buttons:
     [ { text: 'Don\'t delete', event: 'cancel', classname: '' }
-    , { text: 'Delete', event: 'confirm', classname: 'danger' }
+    , { text: 'Delete', event: 'confirm', classname: 'danger', iconClassName: 'icon-delete'}
     ]
   })
   .on('confirm', deleteItem)

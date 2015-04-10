@@ -16,6 +16,7 @@ module.exports = modal
  *       - text (string) the button text
  *       - event (string) the event name to fire when the button is clicked
  *       - className (string) the className to apply to the button
+ *       - iconClassName (string) adds an `i` element before button text with the given class(es)
  *       - keyCodes ([numbers]) the keycodes of shortcuts key for the button
  *       - clickOutsideToClose (boolean) whether a click event outside of the modal should close it
  *       - clickOutsideEvent (string) the name of the event to be triggered on clicks outside of the modal
@@ -30,7 +31,7 @@ module.exports = modal
  *     , content: 'Are you sure you want to delete this object?'
  *     , buttons:
  *       [ { text: 'Don\'t delete', event: 'cancel', className: '' }
- *       , { text: 'Delete', event: 'confirm', className: 'danger' }
+ *       , { text: 'Delete', event: 'confirm', classname: 'danger', iconClassName: 'icon-delete'}
  *       ]
  *     })
  *     .on('confirm', deleteItem)
@@ -43,8 +44,8 @@ var Emitter = require('events').EventEmitter
     { title: 'Are you sure?'
     , content: 'Please confirm this action.'
     , buttons:
-      [ { text: 'Cancel', event: 'cancel', className: '', keyCodes: [ 27 ] }
-      , { text: 'Confirm', event: 'confirm', className: '' }
+      [ { text: 'Cancel', event: 'cancel', className: '', iconClassName: '', keyCodes: [ 27 ] }
+      , { text: 'Confirm', event: 'confirm', className: '', iconClassName: '' }
       ]
     , clickOutsideToClose: true
     , clickOutsideEvent: 'cancel'
