@@ -16,9 +16,11 @@ module.exports = modal
  *       - text (string) the button text
  *       - event (string) the event name to fire when the button is clicked
  *       - className (string) the className to apply to the button
- *       - keyCodes ([numbers]) the keycodes of shortcuts key for the button
- *       - clickOutsideToClose (boolean) whether a click event outside of the modal should close it
- *       - clickOutsideEvent (string) the name of the event to be triggered on clicks outside of the modal
+ *       - iconClassName (string) adds an `i` element before button text with the given class(es)
+ *       - keyCodes ([numbers]) the keycodes of shortcut keys for the button
+ *     - clickOutsideToClose (boolean) whether a click event outside of the modal should close it
+ *     - clickOutsideEvent (string) the name of the event to be triggered on clicks outside of the modal
+ *     - className (string) optional class to apply to the modal element
  *
  *  Events will be fired on the modal according to which button is clicked.
  *  Defaults are confirm/cancel, but these can be overriden in your options.
@@ -29,8 +31,8 @@ module.exports = modal
  *     { title: 'Delete object'
  *     , content: 'Are you sure you want to delete this object?'
  *     , buttons:
- *       [ { text: 'Don\'t delete', event: 'cancel', className: '' }
- *       , { text: 'Delete', event: 'confirm', className: 'danger' }
+ *       [ { text: 'Don’t delete', event: 'cancel' }
+ *       , { text: 'Delete', event: 'confirm', className: 'button-danger', iconClassName: 'icon-delete' }
  *       ]
  *     })
  *     .on('confirm', deleteItem)
@@ -43,8 +45,8 @@ var Emitter = require('events').EventEmitter
     { title: 'Are you sure?'
     , content: 'Please confirm this action.'
     , buttons:
-      [ { text: 'Cancel', event: 'cancel', className: '', keyCodes: [ 27 ] }
-      , { text: 'Confirm', event: 'confirm', className: '' }
+      [ { text: 'Cancel', event: 'cancel', className: '', iconClassName: '', keyCodes: [ 27 ] }
+      , { text: 'Confirm', event: 'confirm', className: '', iconClassName: '' }
       ]
     , clickOutsideToClose: true
     , clickOutsideEvent: 'cancel'

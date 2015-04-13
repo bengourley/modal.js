@@ -21,7 +21,14 @@ buf.push('<div class="modal-controls">');
 
 buf.push('<button');
 buf.push(attrs({ "class": ('js-button') + ' ' + (button.className) }, {"class":true}));
-buf.push('>' + escape((interp = button.text) == null ? '' : interp) + '</button>');
+buf.push('>');
+if ( button.iconClassName)
+{
+buf.push('<i');
+buf.push(attrs({ "class": (button.iconClassName) }, {"class":true}));
+buf.push('></i> ');
+}
+buf.push('' + escape((interp = button.text) == null ? '' : interp) + '</button>');
     }
 
   } else {
@@ -31,7 +38,14 @@ buf.push('>' + escape((interp = button.text) == null ? '' : interp) + '</button>
 
 buf.push('<button');
 buf.push(attrs({ "class": ('js-button') + ' ' + (button.className) }, {"class":true}));
-buf.push('>' + escape((interp = button.text) == null ? '' : interp) + '</button>');
+buf.push('>');
+if ( button.iconClassName)
+{
+buf.push('<i');
+buf.push(attrs({ "class": (button.iconClassName) }, {"class":true}));
+buf.push('></i> ');
+}
+buf.push('' + escape((interp = button.text) == null ? '' : interp) + '</button>');
     }
 
   }

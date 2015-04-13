@@ -90,7 +90,7 @@ describe('modal', function () {
         })
       })
 
-      it('should add the correct classes', function () {
+      it('should add the correct button classes', function () {
         var buttons =
           [ { text: 'Button 1', className: 'one-class' }
           , { text: 'Button 2', className: 'multiple classes' }
@@ -99,6 +99,26 @@ describe('modal', function () {
         assert($('.js-button').eq(0).hasClass('one-class'))
         assert($('.js-button').eq(1).hasClass('multiple'))
         assert($('.js-button').eq(1).hasClass('classes'))
+      })
+
+      it ('should have no button icon by default', function (done) {
+        modal({ fx: false })
+        assert.equal($('.modal-overlay').length, 1)
+        setTimeout(function () {
+          assert.equal($('i').length, 0)
+          done()
+        }, 0)
+      })
+
+      it ('should add button icons with the correct classes', function () {
+        var buttons =
+          [ { text: 'Button 1', iconClassName: 'one-class' }
+          , { text: 'Button 2', iconClassName: 'multiple classes' }
+          ]
+        modal({ fx: false, buttons: buttons })
+        assert($('i').eq(0).hasClass('one-class'))
+        assert($('i').eq(1).hasClass('multiple'))
+        assert($('i').eq(1).hasClass('classes'))
       })
 
     })
