@@ -30,6 +30,9 @@ modal([options])[.on('event')]
 - clickOutsideToClose (boolean) whether a click event outside of the modal should close it
 - clickOutsideEvent (string) the name of the event to be triggered on clicks outside of the modal
 - className (string) optional class to apply to the modal element
+- removeMethod (string) which jQuery method to remove the modal contents with (default: remove)
+    This is useful when you want to append the contents to the DOM again later. In which case
+    set this to 'detach' so that bound event handlers on your content area aren't removed.
 
 Events will be fired on the modal according to which button is clicked.
 Defaults are confirm/cancel, but these can be overriden in your options.

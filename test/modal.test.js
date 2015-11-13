@@ -206,6 +206,18 @@ describe('modal', function () {
       m.close()
     })
 
+    it('should use .detach() if specified as the "remove" method', function (done) {
+      var $el = $('<div/>').on('click', function () { done() })
+        , m = modal({ fx: false, removeMethod: 'detach', content: $el })
+
+      m.on('close', function () {
+        setTimeout(function () { $el.click() }, 1)
+      })
+
+      m.close()
+
+    })
+
   })
 
   describe('centre()', function () {
